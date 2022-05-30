@@ -9,12 +9,7 @@ bd_session = requests.Session()
 response = bd_session.get(first_url)
 cookii = requests.utils.dict_from_cookiejar(response.cookies)
 
-cookie = ""
-for i in dict(cookii):
-    cookie += (i+"=")+dict(cookii)[i]+";"
-
-
-
+cookie = "".join(f"{i}=" + value + ";" for i, value in dict(cookii).items())
 headers = {
     'Accept': 'application/json, text/javascript, */*; q=0.01',
     'Accept-Encoding': 'gzip, deflate, br',

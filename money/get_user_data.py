@@ -15,23 +15,20 @@ def get_user(user_id):
     data2 = {
         'needAlert': 'false',
         'needRedirect': 'true',
-        'accountkey': '{}'.format(user_id),
+        'accountkey': f'{user_id}',
     }
+
     bd_session.post(url2, data=data2)
     res = bd_session.get("https://ssl.jxufe.edu.cn/uid/forget!forget2Type").text
     soup = BeautifulSoup(res, "lxml")
     s_path = "div.input-div"
     user_data = str(soup.select(s_path)).replace("\xa0","").replace('\n','').replace('\r','').replace('\t','')
-    so = ""
-    for i in list(user_data):
-        if (i != '') and (i != ' ') and (i != '"'):
-            so += i
+    so = "".join(i for i in list(user_data) if i not in ['', ' ', '"'])
     # print(so)
-    my_data = re.findall('(?<=</span>).*?(?=</div>)', str(so))
-    all_list = [user_id]
-    data_list = list(i for i in my_data if len(i) < 12)
-    all_list.extend(data_list)
-    if len(all_list) > 0:
+    my_data = re.findall('(?<=</span>).*?(?=</div>)', so)
+    data_list = [i for i in my_data if len(i) < 12]
+    all_list = [user_id, *data_list]
+    if all_list:
         print(all_list)
     return all_list
 
@@ -51,9 +48,8 @@ def test1():
         # id0 = random.randint(2201700000,2201799999)
         res = get_user(i)
         if res != []:
-            f = open("t1.txt",'a')
-            f.write(str(res)+'\n')
-            f.close()
+            with open("t1.txt",'a') as f:
+                f.write(str(res)+'\n')
             a.append(i)
 
 
@@ -62,9 +58,8 @@ def test2():
         # id0 = random.randint(2201700000,2201799999)
         res = get_user(i)
         if res != []:
-            f = open("t1.txt", 'a')
-            f.write(str(res) + '\n')
-            f.close()
+            with open("t1.txt", 'a') as f:
+                f.write(str(res) + '\n')
             a.append(i)
 
 def test3():
@@ -72,9 +67,8 @@ def test3():
         # id0 = random.randint(2201700000,2201799999)
         res = get_user(i)
         if res != []:
-            f = open("t1.txt", 'a')
-            f.write(str(res) + '\n')
-            f.close()
+            with open("t1.txt", 'a') as f:
+                f.write(str(res) + '\n')
             a.append(i)
 
 
@@ -83,9 +77,8 @@ def test4():
         # id0 = random.randint(2201700000,2201799999)
         res = get_user(i)
         if res != []:
-            f = open("t1.txt", 'a')
-            f.write(str(res) + '\n')
-            f.close()
+            with open("t1.txt", 'a') as f:
+                f.write(str(res) + '\n')
             a.append(i)
 
 def test5():
@@ -93,9 +86,8 @@ def test5():
         # id0 = random.randint(2201700000,2201799999)
         res = get_user(i)
         if res != []:
-            f = open("t1.txt", 'a')
-            f.write(str(res) + '\n')
-            f.close()
+            with open("t1.txt", 'a') as f:
+                f.write(str(res) + '\n')
             a.append(i)
 
 def test6():
@@ -103,9 +95,8 @@ def test6():
         # id0 = random.randint(2201700000,2201799999)
         res = get_user(i)
         if res != []:
-            f = open("t1.txt", 'a')
-            f.write(str(res) + '\n')
-            f.close()
+            with open("t1.txt", 'a') as f:
+                f.write(str(res) + '\n')
             a.append(i)
 
 def test6():
@@ -113,18 +104,16 @@ def test6():
         # id0 = random.randint(2201700000,2201799999)
         res = get_user(i)
         if res != []:
-            f = open("t1.txt", 'a')
-            f.write(str(res) + '\n')
-            f.close()
+            with open("t1.txt", 'a') as f:
+                f.write(str(res) + '\n')
             a.append(i)
 def test7():
     for i in range(2201740001,2201740009):
         # id0 = random.randint(2201700000,2201799999)
         res = get_user(i)
         if res != []:
-            f = open("t1.txt", 'a')
-            f.write(str(res) + '\n')
-            f.close()
+            with open("t1.txt", 'a') as f:
+                f.write(str(res) + '\n')
             a.append(i)
 def last():
     t1 = threading.Thread(target=test1)
@@ -147,5 +136,4 @@ try:
     last()
 except Exception as e:
     print(e)
-    pass
 print(a)

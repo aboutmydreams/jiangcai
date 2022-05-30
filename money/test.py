@@ -32460,7 +32460,7 @@ a = '''
 
 a = eval('['+a.replace(']','],')+']')
 b = {}
-for i in list(x for x in a if len(x) == 2):
+for i in [x for x in a if len(x) == 2]:
     c = {}
     if len(i[1]) == 11:
         c['phone'] = i[1]
@@ -32470,7 +32470,7 @@ for i in list(x for x in a if len(x) == 2):
         c['phone'] = 0
     b[i[0]] = c
 
-for i in list(x for x in a if len(x) == 3):
+for i in [x for x in a if len(x) == 3]:
     c = {}
     c['phone'] = i[1]
     c['weixin'] = i[2]
